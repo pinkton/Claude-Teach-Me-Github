@@ -1,0 +1,20 @@
+# General
+.DS_Store
+*.swp
+*.swo
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Language specific (we'll add more as needed)
+__pycache__/
+*.pyc
+node_modules/
+*.class
+
+# Personal notes that shouldn't be shared
+scratch.txt
+notes.txt
