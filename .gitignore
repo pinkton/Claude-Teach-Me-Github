@@ -18,3 +18,7 @@ node_modules/
 # Personal notes that shouldn't be shared
 scratch.txt
 notes.txt
+
+# Credentials
+.git-credentials
+credentials.txt
