@@ -44,6 +44,8 @@ The user (pinkton) is learning:
 - [x] Successfully merge features through develop to main
 - [x] Push all branches to GitHub
 - [x] Set up credential storage for GitHub authentication
+- [x] Handle divergent branches (local vs remote changes)
+- [x] Learn git pull to sync remote changes before pushing
 - [ ] Begin programming fundamentals
 - [ ] Start game modding toolkit project
 
@@ -59,6 +61,13 @@ Key commands learned:
 - `git add`, `git commit -m "message"` - Save changes
 - `git merge feature/name` - Integrate features
 - `git push -u origin branch` - Upload to GitHub
+- `git pull origin branch` - Download and merge remote changes
+
+## Common Scenarios Encountered
+**Divergent Branches:** When local and remote repositories have different commits
+- Caused by: Editing files on GitHub whilst also making local changes
+- Solution: `git pull origin main` to merge remote changes, then push
+- Lesson: Always pull before pushing to avoid conflicts
 
 ## Notes for Future Sessions
 When continuing this project, check:

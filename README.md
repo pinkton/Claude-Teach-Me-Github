@@ -33,9 +33,16 @@ Branching Workflow:
 Remote (GitHub):
  - git remote add origin URL - Connect to GitHub
  - git push -u origin branch - Upload to GitHub
+ - git pull origin branch - Download and merge changes from GitHub
 
-Authentication
+Handling Divergent Branches:
+ - git config pull.rebase false - Configure pull to use merge strategy
+ - git pull - Fetch and merge remote changes before pushing
+ - Scenario: Local and remote have different commits that need combining
+
+Authentication:
  - Set up Personal Access Token for password authentication
+ - git config --global credential.helper store - Save credentials locally
 
 ## Author
 pinkton/Claude AI
