@@ -66,13 +66,24 @@ User can **analyze** code but needs to learn to **write** code. Shift from "reve
 ### 2. C/C++ Development - IN PROGRESS
 **Goal:** Learn to write C/C++ code, not just read assembly.
 
-- [ ] Development environment setup (compiler, IDE, toolchain)
-- [ ] C/C++ syntax fundamentals (the user knows concepts, needs language specifics)
-- [ ] Building and compiling executables
+- [x] Development environment setup (gcc, g++, make already installed in WSL2)
+- [x] First Hello World program (`practice/cpp/hello-world/helloworld.cpp`)
+- [x] Compilation process understanding (preprocessing, compiling, assembly, linking)
+- [x] Compiling to Intel-syntax assembly (`g++ -S -masm=intel`) for analysis
+- [x] Functions with parameters and return values (`practice/cpp/add-two-numbers/add-two-numbers.cpp`)
+- [x] Understanding x86-64 calling conventions (EDI, ESI for params; EAX for return)
+- [x] User input with `std::cin >>`
+- [x] If/else statements and conditional logic (`practice/cpp/if-number-loop/if_greater_smaller.cpp`)
+- [x] Key bug discovered: `=` (assignment) vs `==` (comparison) - caught and fixed
+- [ ] Loops (while, for, do-while) - NEXT TASK
+- [ ] Input validation (checking `std::cin.fail()`, clearing errors)
 - [ ] Memory management (pointers, heap/stack from developer view)
 - [ ] Creating DLLs and understanding linking
 - [ ] Build systems (Makefiles, CMake, or similar)
 - [ ] Debugging C/C++ code (not just binaries)
+
+**Key Learning Discovery:**
+User realized they can write C++ code, compile to assembly, and reverse engineer their own code to learn patterns. This creates a powerful learning loop: **write C++ → compile to assembly → analyze with RE skills → understand patterns → recognize in production software**.
 
 ### 3. Game-Specific Reverse Engineering - UPCOMING
 **Goal:** Shift from malware analysis to game modding methodology.
@@ -121,6 +132,9 @@ User can **analyze** code but needs to learn to **write** code. Shift from "reve
 7. **No pushover teaching** - User explicitly requested critical, honest feedback. Call out nonsense, redundant wording, or incorrect assumptions.
 8. **Leverage existing knowledge** - User has GREM certification and RE experience. Don't explain basic RE concepts they already know.
 9. **Focus on the gap** - Writing code, not analyzing it. Development, not just reverse engineering.
+10. **Don't over-analyze assembly** - User is comfortable with assembly and doesn't need deep dives into every instruction. Use assembly as a learning tool when relevant, but prioritize C++ syntax learning.
+11. **Practical application** - User prefers learning fundamentals before building tools ("no point making a tool if I don't know how to actually code in cpp")
+12. **Minimal emojis** - User explicitly requested minimal emoji usage in responses and documentation.
 
 ## Branch Strategy
 
@@ -170,11 +184,16 @@ When resuming this project:
 - "Why do we merge to develop before main?"
 - "What's the difference between `git add` and `git commit`?"
 
-**C/C++ questions (upcoming):**
-- "What's the difference between the stack and the heap?"
-- "Why do we need to free memory we allocate?"
-- "What's a pointer and why are they important?"
-- "What's the difference between compiling and linking?"
+**C/C++ questions:**
+- "What's the difference between `=` and `==`?" (assignment vs comparison)
+- "What's the difference between `<<` and `>>`?" (output vs input direction)
+- "Which registers are used for the first two integer parameters in x86-64?" (EDI, ESI)
+- "Where does a function's return value go?" (EAX/RAX)
+- "Why do we need calling conventions?" (interoperability between compiled code)
+- "What happens if `std::cin >>` fails when user enters invalid input?" (fail state, variable uninitialized)
+- "Should compiled binaries be committed to git?" (no - only source code)
+- "What's the difference between compiling and linking?" (upcoming)
+- "What's the difference between the stack and the heap?" (upcoming)
 
 **Game RE questions (future):**
 - "How would you find the save game code if you don't know where it is?"
@@ -193,17 +212,34 @@ When resuming this project:
 - Configure `credential.helper store` to save authentication
 - Set up `user.name` and `user.email` globally
 
+**Compiled outputs in git:**
+- Common beginner mistake: committing compiled binaries, assembly files, and object files
+- Only source code (`.cpp`, `.h`) should be in version control
+- Compiled outputs (executables, `.o`, `.s` files) should be in `.gitignore`
+- Build artifacts can always be regenerated from source
+- Use `git rm` to remove mistakenly committed binaries, then add patterns to `.gitignore`
+
 ## Repository Structure
 
 ```
 /Coding/
-├── README.md                    # Public-facing project description
-├── CLAUDE.md                    # This file - Claude Code instructions
-├── git-notes.md                 # Git command reference
+├── README.md                           # Public-facing project description
+├── CLAUDE.md                           # This file - Claude Code instructions
+├── git-notes.md                        # Git command reference
+├── .gitignore                          # Ignore compiled outputs
 └── practice/
-    └── github_commit_push/      # Git workflow learning exercises
-        ├── hello.py
-        └── goodbye.py
+    ├── github_commit_push/             # Git workflow learning exercises
+    │   ├── hello.py
+    │   └── goodbye.py
+    └── cpp/                            # C++ learning exercises
+        ├── programming.md              # C++ learning notes
+        ├── hello-world/
+        │   ├── helloworld.cpp          # First C++ program
+        │   └── readme.md               # Notes on Hello World
+        ├── add-two-numbers/
+        │   └── add-two-numbers.cpp     # Function with parameters/return
+        └── if-number-loop/
+            └── if_greater_smaller.cpp  # If/else and user input
 ```
 
 ## Important Notes
@@ -217,12 +253,23 @@ When resuming this project:
 
 ## Next Session Goals
 
-When resuming:
-1. Set up C/C++ development environment
-2. Write first "Hello World" in C++
-3. Understand compilation and linking
-4. Build towards creating a simple DLL
-5. Eventually: analyze This Means Warp and begin modding
+**Immediate next steps:**
+1. **Clean up git repository** - Remove compiled outputs (`.s` files, binaries) that were mistakenly committed
+2. **Learn loops** - Implement while/for loops to handle repeated input validation
+3. **Input validation** - Handle `std::cin.fail()` when user enters invalid input (letters instead of numbers)
+4. **Combine concepts** - Create a robust number checker that loops until valid input received
+
+**Current location in code:**
+- File: `practice/cpp/if-number-loop/if_greater_smaller.cpp`
+- Status: Has working if/else logic and user input, but uses recursive `main()` call (bad practice)
+- Need to replace recursive call with proper loop
+
+**Upcoming tasks:**
+1. More control flow practice (switch statements, nested loops)
+2. Different data types (char, float, string, bool, arrays)
+3. Build simple file I/O tool (reads/writes files)
+4. Learn pointers and memory management
+5. Eventually: Create first DLL and analyze This Means Warp
 
 ---
 

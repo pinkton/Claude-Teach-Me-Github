@@ -62,13 +62,23 @@ Many games, especially indie or older titles, have features that are abandoned b
 
 ```
 /Coding/
-├── README.md                    # This file
-├── CLAUDE.md                    # Instructions for Claude Code sessions
-├── git-notes.md                 # Git command reference
+├── README.md                           # This file
+├── CLAUDE.md                           # Instructions for Claude Code sessions
+├── git-notes.md                        # Git command reference
+├── .gitignore                          # Ignore compiled outputs
 └── practice/
-    └── github_commit_push/      # Git workflow learning exercises
-        ├── hello.py
-        └── goodbye.py
+    ├── github_commit_push/             # Git workflow learning exercises
+    │   ├── hello.py
+    │   └── goodbye.py
+    └── cpp/                            # C++ learning exercises
+        ├── programming.md              # C++ learning notes
+        ├── hello-world/
+        │   ├── helloworld.cpp          # First C++ program
+        │   └── readme.md               # Notes on Hello World
+        ├── add-two-numbers/
+        │   └── add-two-numbers.cpp     # Function with parameters/return
+        └── if-number-loop/
+            └── if_greater_smaller.cpp  # If/else and user input
 ```
 
 ## Git Workflow Reference
@@ -101,8 +111,14 @@ This is a public learning repository. All AI-generated files should be prefixed 
 
 ## Next Steps
 
-- [ ] Set up C/C++ development environment
-- [ ] Build first "Hello World" C++ program
+- [x] Set up C/C++ development environment
+- [x] Build first "Hello World" C++ program
+- [x] Learn functions with parameters and return values
+- [x] Understand if/else statements and user input
+- [ ] Learn loops (while, for, do-while)
+- [ ] Input validation and error handling
+- [ ] Build simple file I/O tool
+- [ ] Learn pointers and memory management
 - [ ] Create simple DLL injection tool
 - [ ] Analyze This Means Warp save system
 - [ ] Prototype save system hook
