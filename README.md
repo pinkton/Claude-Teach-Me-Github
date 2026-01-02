@@ -10,14 +10,14 @@ Create tools for debugging and modifying legacy games to work better on modern o
 
 ## Current Status
 
-**Background:** GIAC GREM certified with experience in reverse engineering (Ghidra, IDA, x64dbg) and CTF challenges. Comfortable reading assembly and analyzing binaries, but need to shift from malware analysis to game modding and develop C/C++ coding skills.
+**Background:** GIAC GREM certified with experience in reverse engineering (Ghidra, IDA, x64dbg) and CTF challenges. Comfortable reading assembly and analysing binaries, but need to shift from malware analysis to game modding and develop C/C++ coding skills.
 
 **Gap:** The shift from "threat hunting" (malware analysis) to "feature hunting" (game reverse engineering), and moving from reading assembly to writing C/C++ code for building user-facing tools.
 
 **Learning Journey:**
-- ✅ Git workflow mastered (branching, merging, pushing to GitHub)
-- 🔄 Currently learning: C/C++ development and building tools
-- 🎯 Goal: Create save system modification for This Means Warp
+- [COMPLETED] Git workflow mastered (branching, merging, pushing to GitHub)
+- [IN PROGRESS] Currently learning: C/C++ development and building tools
+- [GOAL] Create save system modification for This Means Warp
 
 ## Why This Matters
 
@@ -35,24 +35,24 @@ Many games, especially indie or older titles, have features that are abandoned b
 
 ## Learning Path
 
-1. ✅ **Git Workflow** - Completed
+1. **Git Workflow** - Completed
    - Branching strategy (feature → develop → main)
    - GitHub integration and authentication
    - Professional workflow habits
 
-2. 🔄 **C/C++ Development** - In Progress
+2. **C/C++ Development** - In Progress
    - Syntax and language fundamentals
    - Building executables and DLLs
    - Memory management from developer perspective
    - Creating user-facing tools
 
-3. ⏳ **Game-Specific Reverse Engineering** - Upcoming
+3. **Game-Specific Reverse Engineering** - Upcoming
    - Finding game features (not malicious code)
    - Tracing UI elements and game logic
    - Understanding save systems and file formats
    - Instrumentation and logging without crashes
 
-4. ⏳ **Building the Mod** - Future
+4. **Building the Mod** - Future
    - DLL injection for This Means Warp
    - Hooking save system logic
    - Implementing reliable save/load functionality

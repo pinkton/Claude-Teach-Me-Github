@@ -24,22 +24,22 @@ This is a **learning repository** for developing C/C++ skills to create game mod
 ## User Background - IMPORTANT
 
 **Existing Skills:**
-- ✅ **GIAC GREM certified** - Professional reverse engineering of malware
-- ✅ **Reverse engineering tools:** Ghidra, IDA Pro, x64dbg (experienced)
-- ✅ **CTF experience** - Capture The Flag challenges (4 years ago, but foundational knowledge intact)
-- ✅ **Binary analysis:** Comfortable reading assembly, understanding PE format, tracing execution
-- ✅ **Scripting:** Python and PowerShell (day job usage)
-- ✅ **Conceptual understanding:** Variables, loops, functions, control flow (high-level concepts)
+- **GIAC GREM certified** - Professional reverse engineering of malware
+- **Reverse engineering tools:** Ghidra, IDA Pro, x64dbg (experienced)
+- **CTF experience** - Capture The Flag challenges (4 years ago, but foundational knowledge intact)
+- **Binary analysis:** Comfortable reading assembly, understanding PE format, tracing execution
+- **Scripting:** Python and PowerShell (day job usage)
+- **Conceptual understanding:** Variables, loops, functions, control flow (high-level concepts)
 
 **The Gap - What User NEEDS to Learn:**
-- ❌ **C/C++ syntax and development** - Can read assembly, but can't write C/C++ code
-- ❌ **Building executables and DLLs** - Need to understand toolchains, compilers, linkers
-- ❌ **Game reverse engineering methodology** - Different from malware analysis:
+- **C/C++ syntax and development** - Can read assembly, but can't write C/C++ code
+- **Building executables and DLLs** - Need to understand toolchains, compilers, linkers
+- **Game reverse engineering methodology** - Different from malware analysis:
   - Malware RE: "Look for malicious patterns" (threat hunting)
   - Game RE: "Look for functional patterns" (feature hunting)
   - Need to find UI code, save systems, game logic (not IOCs or suspicious APIs)
-- ❌ **Creating user-facing tools** - Not just analysis, but building tools others can use
-- ❌ **Memory management from developer perspective** - Allocating and manipulating, not just analyzing
+- **Creating user-facing tools** - Not just analysis, but building tools others can use
+- **Memory management from developer perspective** - Allocating and manipulating, not just analyzing
 
 **Critical Insight:**
 User can **analyze** code but needs to learn to **write** code. Shift from "reverse engineering analyst" to "game modding developer."
@@ -47,12 +47,12 @@ User can **analyze** code but needs to learn to **write** code. Shift from "reve
 ## Learning Path (Updated)
 
 **Learning Path (in order):**
-1. ✅ **Git Workflow** - COMPLETED
-2. 🔄 **C/C++ Development** - IN PROGRESS (current focus)
-3. ⏳ **Game-Specific Reverse Engineering** - UPCOMING
-4. ⏳ **Building the This Means Warp Mod** - FUTURE
+1. **Git Workflow** - COMPLETED
+2. **C/C++ Development** - IN PROGRESS (current focus)
+3. **Game-Specific Reverse Engineering** - UPCOMING
+4. **Building the This Means Warp Mod** - FUTURE
 
-### 1. Git Workflow - COMPLETED ✓
+### 1. Git Workflow - COMPLETED
 - [x] Repository setup and configuration
 - [x] Branch workflow (feature → develop → main)
 - [x] Creating and switching branches
@@ -63,7 +63,7 @@ User can **analyze** code but needs to learn to **write** code. Shift from "reve
 - [x] Understanding when to use proper workflow vs direct commits
 - [x] Multi-machine authentication setup
 
-### 2. C/C++ Development - IN PROGRESS 🔄
+### 2. C/C++ Development - IN PROGRESS
 **Goal:** Learn to write C/C++ code, not just read assembly.
 
 - [ ] Development environment setup (compiler, IDE, toolchain)
@@ -74,7 +74,7 @@ User can **analyze** code but needs to learn to **write** code. Shift from "reve
 - [ ] Build systems (Makefiles, CMake, or similar)
 - [ ] Debugging C/C++ code (not just binaries)
 
-### 3. Game-Specific Reverse Engineering - UPCOMING ⏳
+### 3. Game-Specific Reverse Engineering - UPCOMING
 **Goal:** Shift from malware analysis to game modding methodology.
 
 - [ ] Finding game features (not malicious code)
@@ -90,7 +90,7 @@ User can **analyze** code but needs to learn to **write** code. Shift from "reve
   - Understanding game state
 - [ ] Finding UI elements and menu code
 
-### 4. Building the This Means Warp Mod - FUTURE ⏳
+### 4. Building the This Means Warp Mod - FUTURE
 
 **Specific Questions to Answer:**
 1. How does the save system work?
