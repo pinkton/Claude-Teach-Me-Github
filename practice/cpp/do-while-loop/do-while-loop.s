@@ -1,32 +1,26 @@
-	.file	"if-greater-smaller.cpp"
+	.file	"if_greater_smaller.cpp"
 	.intel_syntax noprefix
 	.text
-#APP
-	.globl _ZSt21ios_base_library_initv
+	.local	_ZStL8__ioinit
+	.comm	_ZStL8__ioinit,1,1
 	.section	.rodata
 	.align 8
 .LC0:
-	.string	"Please enter a number from 0 - 20, or -1 to quit:"
-	.align 8
+	.string	"Please enter a number from 0 - 20:"
 .LC1:
-	.string	"Invalid input! Please enter a number."
-.LC2:
 	.string	"Number is greater than 10"
-.LC3:
+.LC2:
 	.string	"Number is less than 10"
-.LC4:
+.LC3:
 	.string	"Number is exactly 10"
-.LC5:
-	.string	"Quitting!"
 	.align 8
-.LC6:
-	.string	"Number is not within parameters, or is not a number, try again\n"
-#NO_APP
+.LC4:
+	.string	"Number is not within parameters, or is not a number, try again"
 	.text
 	.globl	main
 	.type	main, @function
 main:
-.LFB1988:
+.LFB1731:
 	.cfi_startproc
 	endbr64
 	push	rbp
@@ -38,7 +32,6 @@ main:
 	mov	rax, QWORD PTR fs:40
 	mov	QWORD PTR -8[rbp], rax
 	xor	eax, eax
-.L9:
 	lea	rax, .LC0[rip]
 	mov	rsi, rax
 	lea	rax, _ZSt4cout[rip]
@@ -53,20 +46,12 @@ main:
 	lea	rax, _ZSt3cin[rip]
 	mov	rdi, rax
 	call	_ZNSirsERi@PLT
-	lea	rax, _ZSt3cin[rip+16]
-	mov	rdi, rax
-	call	_ZNKSt9basic_iosIcSt11char_traitsIcEE4failEv@PLT
-	test	al, al
-	je	.L2
-	mov	esi, 0
-	lea	rax, _ZSt3cin[rip+16]
-	mov	rdi, rax
-	call	_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate@PLT
-	mov	edx, 10
-	mov	esi, 100
-	lea	rax, _ZSt3cin[rip]
-	mov	rdi, rax
-	call	_ZNSi6ignoreEli@PLT
+	mov	eax, DWORD PTR -12[rbp]
+	cmp	eax, 10
+	jle	.L2
+	mov	eax, DWORD PTR -12[rbp]
+	cmp	eax, 20
+	jg	.L2
 	lea	rax, .LC1[rip]
 	mov	rsi, rax
 	lea	rax, _ZSt4cout[rip]
@@ -79,11 +64,11 @@ main:
 	jmp	.L3
 .L2:
 	mov	eax, DWORD PTR -12[rbp]
-	cmp	eax, 10
-	jle	.L4
-	mov	eax, DWORD PTR -12[rbp]
-	cmp	eax, 20
+	cmp	eax, 9
 	jg	.L4
+	mov	eax, DWORD PTR -12[rbp]
+	test	eax, eax
+	js	.L4
 	lea	rax, .LC2[rip]
 	mov	rsi, rax
 	lea	rax, _ZSt4cout[rip]
@@ -96,11 +81,8 @@ main:
 	jmp	.L3
 .L4:
 	mov	eax, DWORD PTR -12[rbp]
-	cmp	eax, 9
-	jg	.L5
-	mov	eax, DWORD PTR -12[rbp]
-	test	eax, eax
-	js	.L5
+	cmp	eax, 10
+	jne	.L5
 	lea	rax, .LC3[rip]
 	mov	rsi, rax
 	lea	rax, _ZSt4cout[rip]
@@ -112,9 +94,6 @@ main:
 	call	_ZNSolsEPFRSoS_E@PLT
 	jmp	.L3
 .L5:
-	mov	eax, DWORD PTR -12[rbp]
-	cmp	eax, 10
-	jne	.L6
 	lea	rax, .LC4[rip]
 	mov	rsi, rax
 	lea	rax, _ZSt4cout[rip]
@@ -124,61 +103,79 @@ main:
 	mov	rsi, rdx
 	mov	rdi, rax
 	call	_ZNSolsEPFRSoS_E@PLT
-	jmp	.L9
-.L6:
-	mov	eax, DWORD PTR -12[rbp]
-	cmp	eax, -1
-	jne	.L7
-	lea	rax, .LC5[rip]
-	mov	rsi, rax
-	lea	rax, _ZSt4cout[rip]
-	mov	rdi, rax
-	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT
-	mov	rdx, QWORD PTR _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@GOTPCREL[rip]
-	mov	rsi, rdx
-	mov	rdi, rax
-	call	_ZNSolsEPFRSoS_E@PLT
-	nop
+	call	main
+.L3:
 	mov	eax, 0
 	mov	rdx, QWORD PTR -8[rbp]
 	sub	rdx, QWORD PTR fs:40
-	je	.L11
-	jmp	.L12
-.L7:
-	lea	rax, .LC6[rip]
-	mov	rsi, rax
-	lea	rax, _ZSt4cout[rip]
-	mov	rdi, rax
-	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT
-	mov	rdx, QWORD PTR _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@GOTPCREL[rip]
-	mov	rsi, rdx
-	mov	rdi, rax
-	call	_ZNSolsEPFRSoS_E@PLT
-.L3:
-	jmp	.L9
-.L12:
+	je	.L7
 	call	__stack_chk_fail@PLT
-.L11:
+.L7:
 	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
-.LFE1988:
+.LFE1731:
 	.size	main, .-main
-	.section	.rodata
-	.type	_ZNSt8__detail30__integer_to_chars_is_unsignedIjEE, @object
-	.size	_ZNSt8__detail30__integer_to_chars_is_unsignedIjEE, 1
-_ZNSt8__detail30__integer_to_chars_is_unsignedIjEE:
-	.byte	1
-	.type	_ZNSt8__detail30__integer_to_chars_is_unsignedImEE, @object
-	.size	_ZNSt8__detail30__integer_to_chars_is_unsignedImEE, 1
-_ZNSt8__detail30__integer_to_chars_is_unsignedImEE:
-	.byte	1
-	.type	_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE, @object
-	.size	_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE, 1
-_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE:
-	.byte	1
-	.ident	"GCC: (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0"
+	.type	_Z41__static_initialization_and_destruction_0ii, @function
+_Z41__static_initialization_and_destruction_0ii:
+.LFB2234:
+	.cfi_startproc
+	endbr64
+	push	rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	mov	rbp, rsp
+	.cfi_def_cfa_register 6
+	sub	rsp, 16
+	mov	DWORD PTR -4[rbp], edi
+	mov	DWORD PTR -8[rbp], esi
+	cmp	DWORD PTR -4[rbp], 1
+	jne	.L10
+	cmp	DWORD PTR -8[rbp], 65535
+	jne	.L10
+	lea	rax, _ZStL8__ioinit[rip]
+	mov	rdi, rax
+	call	_ZNSt8ios_base4InitC1Ev@PLT
+	lea	rax, __dso_handle[rip]
+	mov	rdx, rax
+	lea	rax, _ZStL8__ioinit[rip]
+	mov	rsi, rax
+	mov	rax, QWORD PTR _ZNSt8ios_base4InitD1Ev@GOTPCREL[rip]
+	mov	rdi, rax
+	call	__cxa_atexit@PLT
+.L10:
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE2234:
+	.size	_Z41__static_initialization_and_destruction_0ii, .-_Z41__static_initialization_and_destruction_0ii
+	.type	_GLOBAL__sub_I_main, @function
+_GLOBAL__sub_I_main:
+.LFB2235:
+	.cfi_startproc
+	endbr64
+	push	rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	mov	rbp, rsp
+	.cfi_def_cfa_register 6
+	mov	esi, 65535
+	mov	edi, 1
+	call	_Z41__static_initialization_and_destruction_0ii
+	pop	rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE2235:
+	.size	_GLOBAL__sub_I_main, .-_GLOBAL__sub_I_main
+	.section	.init_array,"aw"
+	.align 8
+	.quad	_GLOBAL__sub_I_main
+	.hidden	__dso_handle
+	.ident	"GCC: (Ubuntu 11.4.0-1ubuntu1~22.04.2) 11.4.0"
 	.section	.note.GNU-stack,"",@progbits
 	.section	.note.gnu.property,"a"
 	.align 8
