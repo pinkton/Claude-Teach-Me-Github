@@ -22,3 +22,6 @@ notes.txt
 # Credentials
 .git-credentials
 credentials.txt
+
+# Anti claude metadata
+.claude/
