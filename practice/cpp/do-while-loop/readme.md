@@ -1,11 +1,13 @@
 ## What is it
-This file "if-greater-smaller" is a simple CPP program, that asks the user for integer input between 0 and 20, outputting whether it is larger, smaller or exactly of 10.
+This file "do-while-loop" is a CPP program that demonstrates do-while loops. It asks the user for integer input between 0 and 20, outputting whether it is larger, smaller or exactly 10.
 
-Currently, works with numbers but don't get crazy inputting weird things like letters, you'll get weird results?
+Key difference from the while loop version - this uses `do {...} while (condition)` instead of `while (condition) {...}`. Practically the same result when using `while (true)` with `break`, but good to understand both syntaxes.
 
-NB Letters are less than 10.
+Also includes proper input validation using `std::cin.fail()`, `std::cin.clear()`, and `std::cin.ignore()` - so typing letters or symbols doesn't break it anymore. It'll just tell you off and ask again.
+
+Enter -1 to quit.
 
 ## How I've built it, and what it outputs
-g++ -S -masm=intel if-greater-smaller.cpp = ASM file output
+g++ -S -masm=intel do-while-loop.cpp = ASM file output
 
-g++ -masm=intel if-greater-smaller.cpp -o add-two-numbers = Intel ELF file
+g++ -masm=intel do-while-loop.cpp -o do-while-loop = Intel ELF file
