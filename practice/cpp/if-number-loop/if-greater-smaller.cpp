@@ -10,9 +10,10 @@ int main () {
             std::cin.clear();  // Clear the error flags
             std::cin.ignore(100, '\n');  // Discard up to 100 chars or until newline
             std::cout << "Invalid input! Please enter a number." << std::endl;
+            continue;
         }
 
-        if (number > 10 && number <= 20) 
+        else if (number > 10 && number <= 20) 
         {
             std::cout << "Number is greater than 10" << std::endl;
         } 
