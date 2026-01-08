@@ -91,15 +91,26 @@ User can **analyse** code but needs to learn to **write** code. Shift from "reve
   - [x] Memory layout - contiguous blocks, 4-byte spacing for int arrays
   - [x] Iteration with for loops
   - [x] Out-of-bounds access and undefined behaviour - intentionally triggered to see garbage stack values
-  - [ ] sizeof operator for calculating array length (NEXT - resume next session)
-- [ ] Pointers and pointer arithmetic - understanding memory addresses, array/pointer relationship
-- [ ] Memory management (pointers, heap/stack from developer view)
+  - [x] sizeof operator for calculating array length
+- [x] Pointers - fundamentals (`practice/cpp/pointers/pointers.cpp`):
+  - [x] Address-of operator (`&`) - gets memory address of variable
+  - [x] Pointer declaration (`int* ptr = &num`)
+  - [x] Dereference operator (`*ptr`) - accesses value at address
+  - [x] ASLR observation - addresses change each run
+  - [x] Arrays ARE pointers - `scores` and `&scores[0]` are identical
+  - [x] Array indexing is pointer arithmetic - `scores[2]` equals `*(scores + 2)`
+  - [x] Memory address spacing - addresses increase by `sizeof(type)` bytes
+- [ ] Pointer arithmetic practice - iterating arrays with pointers instead of indices
+- [ ] Memory management (heap vs stack from developer perspective)
 - [ ] Creating DLLs and understanding linking
 - [ ] Build systems (Makefiles, CMake, or similar)
 - [ ] Debugging C/C++ code (not just binaries)
 
 **Key Learning Discovery:**
 User realised they can write C++ code, compile to assembly, and reverse engineer their own code to learn patterns. This creates a powerful learning loop: **write C++ → compile to assembly → analyse with RE skills → understand patterns → recognise in production software**.
+
+**Mental Model Shift Required (Pointers):**
+User has years of high-level programming experience where array indexing feels like "pointing to a value." The low-level reality is the opposite: `scores[2]` is actually *dereferencing* — the bracket notation is syntactic sugar for `*(scores + 2)`. This requires active reinforcement through varied exercises to replace the ingrained high-level mental model.
 
 ### 3. Windows Internals & DLL Development - UPCOMING
 **Goal:** Learn transferable skills for modifying any Windows application.
@@ -141,82 +152,62 @@ User realised they can write C++ code, compile to assembly, and reverse engineer
 2. Can saves be copied/moved?
 3. Is it seeded or encrypted?
 4. When can saves occur? (checkpoints only, or can we add quicksave?)
-5. How to find menu code for adding a "Save" button?
-6. How to hook and log game behavior?
 
-**Implementation Steps:**
-- [ ] Analyse This Means Warp save system
-- [ ] Create DLL injector/loader
-- [ ] Hook save system logic
-- [ ] Implement reliable save/load
-- [ ] Create user-friendly interface
-- [ ] Test and refine
+## Teaching Methodology
 
-## Teaching Methodology for Future Claude Sessions
+### Core Principles
+1. **Ask, don't tell** - Lead with questions so user discovers concepts themselves
+2. **One concept at a time** - Don't overwhelm with information
+3. **Verify before advancing** - Ask "What do you think that does?" before explaining
+4. **British English** - Colour, realise, whilst, etc.
+5. **No hand-holding** - User requested critical, honest feedback
+6. **Test previous knowledge** - Start sessions by asking about last session's concepts
 
-**IMPORTANT - How to teach the user:**
+### Code Writing Approach
+1. **User writes first** - Let them attempt before showing solutions
+2. **Compile and observe** - See actual results, not just theory
+3. **Assembly analysis** - Use their RE skills to understand what the compiler generates
+4. **Iterate** - Build upon working code, don't start from scratch
 
-1. **Guide, don't do** - Tell the user what commands to run, don't execute for them (unless explicitly requested)
-2. **Ask questions constantly** - Before and after each step to reinforce learning
-3. **Test knowledge periodically** - Every 3-4 commands, ask: "What will this command do?" or "Why are we doing this?"
-4. **Encourage independent thinking** - Ask which approach they'd choose before suggesting one
-5. **Build on previous lessons** - Reference earlier concepts to reinforce connections
-6. **Let them make mistakes** - If they suggest the wrong command, ask guiding questions rather than immediately correcting
-7. **No pushover teaching** - User explicitly requested critical, honest feedback. Call out nonsense, redundant wording, or incorrect assumptions.
-8. **Leverage existing knowledge** - User has GREM certification and RE experience. Don't explain basic RE concepts they already know.
-9. **Focus on the gap** - Writing code, not analyzing it. Development, not just reverse engineering.
-10. **Don't over-analyze assembly** - User is comfortable with assembly and doesn't need deep dives into every instruction. Use assembly as a learning tool when relevant, but prioritize C++ syntax learning.
-11. **Practical application** - User prefers learning fundamentals before building tools ("no point making a tool if I don't know how to actually code in cpp")
-12. **Minimal emojis** - User explicitly requested minimal emoji usage in responses and documentation.
+### Session Structure
+1. **Review** - Quick questions on previous session (from PROGRESS.md)
+2. **Current topic** - One new concept with practical coding
+3. **Verification** - User explains back what they learned
+4. **Document** - Update PROGRESS.md with what was covered
 
-## Branch Strategy
+## Bash Shortcuts (User's WSL Environment)
 
-- **main**: Production-ready, stable code only
-  - For solo learning: Can commit documentation directly when appropriate
-  - For code changes: Use feature → develop → main workflow
-- **develop**: Integration branch for testing features before production
-- **feature/[name]**: Individual feature branches for isolated development
+These shortcuts exist in `~/.bashrc`:
 
-**Flexibility:** User understands when to use full workflow (code changes, teams) vs when to be pragmatic (documentation, solo work). Trust their judgment.
-
-## Git Workflow Reference
-
-See `git-notes.md` for complete command reference.
-
-**Professional workflow:**
-```
-feature/name → develop → main
-   (work)      (test)  (production)
+**compile-asm:** Compiles C++ to both executable and Intel-syntax assembly
+```bash
+compile-asm() {
+    if [ -z "$1" ]; then
+        echo "Usage: compile-asm filename.cpp"
+        return 1
+    fi
+    local basename="${1%.cpp}"
+    g++ "$1" -o "$basename" && g++ -S -masm=intel "$1" -o "${basename}.s"
+    echo "Created: $basename (executable) and ${basename}.s (assembly)"
+}
 ```
 
-Key commands mastered:
-- `git checkout -b feature/name` - Create feature branch
-- `git add`, `git commit -m "message"` - Save changes
-- `git merge feature/name` - Integrate features
-- `git push -u origin branch` - Upload to GitHub
-- `git pull origin branch` - Download and merge remote changes
-- `git config credential.helper store` - Save authentication
+**gitpush:** Stages, commits, and pushes to main in one command
+```bash
+gitpush() {
+    if [ -z "$1" ]; then
+        echo "Usage: gitpush \"commit message\""
+        return 1
+    fi
+    git add -A && git commit -m "$1" && git push origin main
+}
+```
 
-## User's Bash Shortcuts
+## Before Starting Any Session
 
-The user has custom bash functions configured in `~/.bashrc`:
-
-**compile-asm filename.cpp**
-- Compiles C++ to both executable and Intel-syntax assembly
-- User created this to quickly analyse their own compiled code
-- When suggesting compilation, you can reference this shortcut
-
-**gitpush "commit message"**
-- Combines `git add -A`, `git commit -m`, and `git push origin main`
-- Streamlined workflow for solo work on main branch
-- User may use this instead of individual git commands
-
-## Session Start Checklist for Future Claude
-
-When resuming this project:
-1. Read this entire file to understand context and methodology
-2. **Read PROGRESS.md** - Check current session status, where we left off, and what's next
-3. **Remember:** User is GREM certified with RE experience - don't explain basic RE concepts
+1. **Read PROGRESS.md** - See exactly where we left off and what to test
+2. **Check for uploaded files** - User may provide current code state
+3. **Ask review questions** - Test retention from last session (questions listed in PROGRESS.md)
 4. **Focus:** User needs to learn C/C++ development, not reverse engineering
 5. Check current branch: `git branch`
 6. Check for uncommitted changes: `git status`
@@ -248,12 +239,23 @@ When resuming this project:
 - "What's the difference between compiling and linking?" (upcoming)
 - "What's the difference between the stack and the heap?" (upcoming)
 
-**Array questions (upcoming):**
+**Array questions:**
 - "Why are arrays zero-indexed?"
 - "What happens if you access `array[10]` when the array size is 5?"
 - "How do you iterate over an array with a for loop?"
-- "What's the relationship between arrays and pointers?"
-- "How do you get the size of an array?"
+- "How do you get the size of an array?" (`sizeof(array) / sizeof(array[0])`)
+
+**Pointer questions (ACTIVE - requires reinforcement):**
+- "What does `&variable` give you?" (the memory address)
+- "What does `*pointer` give you?" (the value at that address)
+- "What's the difference between `int* ptr` and `*ptr`?" (declaration vs dereferencing)
+- "What does `scores[2]` actually do under the hood?" (pointer arithmetic + dereference: `*(scores + 2)`)
+- "Why does `scores + 1` add 4 bytes, not 1 byte?" (pointer arithmetic scales by `sizeof(type)`)
+- "If `scores` is at address `0x1000`, what address is `scores + 2`?" (0x1008 for int array)
+- "What are `scores` and `&scores[0]}` — same or different?" (same — both are address of first element)
+- "Is `scores[2]` a pointer or a value?" (a value — the bracket notation dereferences)
+- "Rewrite `scores[3]` using pointer syntax." (`*(scores + 3)`)
+- "Rewrite `*(ptr + 1)` using array syntax." (`ptr[1]`)
 
 **Game RE questions (future):**
 - "How would you find the save game code if you don't know where it is?"
@@ -308,9 +310,12 @@ When resuming this project:
         ├── for-loop/
         │   ├── for-loop.cpp            # For loop counting examples
         │   └── readme.md               # Notes on for loops
-        └── arrays/
-            ├── arrays.cpp              # Array fundamentals and undefined behaviour
-            └── readme.md               # Notes on arrays
+        ├── arrays/
+        │   ├── arrays.cpp              # Array fundamentals and undefined behaviour
+        │   └── readme.md               # Notes on arrays
+        └── pointers/
+            ├── pointers.cpp            # Pointer fundamentals and array relationship
+            └── readme.md               # Notes on pointers
 ```
 
 ## Important Notes
@@ -325,37 +330,32 @@ When resuming this project:
 ## Next Session Goals
 
 **Immediate next steps:**
-1. **Arrays - sizeof operator** - Resume from where we left off
-   - **Question to answer:** What will `sizeof(numbers)`, `sizeof(int)`, and `sizeof(numbers)/sizeof(int)` return?
-   - Understanding why `sizeof(array)` gives total bytes, not element count
-   - Calculating array length programmatically: `sizeof(numbers) / sizeof(numbers[0])`
-   - Using calculated length in for loops instead of hardcoding `i < 5`
-   - Multi-dimensional arrays (`int grid[3][3]`) if time allows
-2. **Pointers** - Understanding memory addresses and pointer arithmetic (natural follow-up to arrays)
-3. **Different data types** - char, float, string, bool (can introduce alongside arrays/pointers)
-4. **More practice** - Combine arrays, loops, and different data types
+1. **Pointer arithmetic practice** - Iterate through array using pointer instead of index
+2. **Reinforce mental model** - More exercises showing `array[i]` ↔ `*(array + i)` equivalence
+3. **Modify values through pointers** - Show that `*ptr = 100` changes the original variable
+4. **Different data types** - char, float, string, bool (can introduce alongside pointers)
 
 **Current progress:**
-- Completed all three loop types (while, do-while, for)
-- Completed input validation for handling non-numeric input
-- **Completed array fundamentals** - declaration, zero-indexing, memory layout, iteration, undefined behaviour
-- Examined contiguous memory layout in assembly (4-byte spacing for int arrays)
-- Intentionally triggered out-of-bounds access to observe undefined behaviour
-- One working array program demonstrating basics
-- **Next:** sizeof operator to avoid hardcoding array length
+- Completed pointer fundamentals (address-of, dereference, declaration)
+- Proved array/pointer equivalence (`scores` == `&scores[0]`)
+- Proved indexing is pointer arithmetic (`scores[2]` == `*(scores + 2)`)
+- Observed address spacing (4 bytes per int)
+- **Identified mental model gap** - User thinks in high-level "pointing to value" terms, needs to internalise low-level "dereference" reality
 
-**Why sizeof matters:**
-- Makes code more maintainable (change array size once, loops update automatically)
-- Essential for understanding how C++ views arrays vs pointers
-- Leads naturally into pointer arithmetic and array/pointer relationship
+**Why reinforcement matters:**
+- Years of high-level programming create strong mental models
+- Low-level pointer reality is counterintuitive at first
+- Repeated varied exercises build new neural pathways
+- Essential foundation for memory manipulation in game modding
 
 **Upcoming tasks (transferable skills focus):**
-1. Arrays and pointers - understand memory layout
-2. Structs and custom data structures
-3. Build simple file I/O tool (reads/writes files - applicable to save file analysis)
-4. Create first DLL (transferable to any Windows application)
-5. Practice on UT99 (safe environment to apply skills)
-6. Eventually: Apply everything to This Means Warp (or whatever game interests you by then)
+1. Pointer arithmetic iteration (current)
+2. Modifying values through pointers
+3. Structs and custom data structures
+4. Build simple file I/O tool (reads/writes files - applicable to save file analysis)
+5. Create first DLL (transferable to any Windows application)
+6. Practice on UT99 (safe environment to apply skills)
+7. Eventually: Apply everything to This Means Warp (or whatever game interests you by then)
 
 ---
 

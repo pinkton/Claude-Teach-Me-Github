@@ -11,5 +11,13 @@ int main() {
     std::cout << "Value stored in ptr: " << ptr << std::endl;
     std::cout << "Value pointed to by ptr: " << *ptr << std::endl;
 
+    // Another way to understand references, arrays and derefencing.
+    // scores[0] + 1 is equivalent to scores[1]
+    // &scores[0] gets the memory address
+    int scores[5] = {10, 20, 30, 40, 50};
+    std::cout << "\n--- Watch the Addresses ---" << std::endl;
+    std::cout << "Address of scores[0]: " << &scores[0] << std::endl;
+    std::cout << "Address of scores[1]: " << &scores[1] << std::endl;
+    std::cout << "Address of scores[2]: " << &scores[2] << std::endl;
     return 0;
 }

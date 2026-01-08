@@ -1,19 +1,134 @@
 # Learning Progress Tracker
 
-**Last Updated:** 2026-01-07
+**Last Updated:** 2026-01-08
 
 This file tracks session-by-session progress. See CLAUDE.md for methodology and overall learning path.
 
 ---
 
-## Current Session: 2026-01-07
+## Current Session: 2026-01-08
+
+### Session Focus
+- Continued pointers — array/pointer relationship
+- Identified mental model shift needed (high-level vs low-level thinking)
+
+### What Was Completed Today
+
+**1. Pointer Fundamentals - VERIFIED**
+- Confirmed dereference operator works: `*ptr` outputs `42`
+- Full output verified:
+  ```
+  Value of num: 42
+  Address of num: 0x7ffd08750ca4
+  Value stored in ptr: 0x7ffd08750ca4
+  Value pointed to by ptr: 42
+  ```
+
+**2. Arrays ARE Pointers - COMPLETED**
+- Proved `scores` and `&scores[0]` output identical addresses
+- Array name by itself is the address of the first element
+
+**3. Array Indexing is Pointer Arithmetic - COMPLETED**
+- Proved `scores[2]` and `*(scores + 2)` both output `30`
+- Bracket notation is syntactic sugar for pointer arithmetic + dereference
+- `scores[i]` is equivalent to `*(scores + i)`
+
+**4. Address Spacing Observation - COMPLETED**
+- Displayed addresses of `scores[0]`, `scores[1]`, `scores[2]`
+- Observed 4-byte increments (sizeof int)
+- Pointer arithmetic scales by `sizeof(type)`, not by 1 byte
+
+**5. Mental Model Gap Identified - CRITICAL**
+- User has years of high-level thinking: "array[i] points to a value"
+- Low-level reality: "array[i] dereferences an address"
+- This is backwards from intuition and requires active reinforcement
+- Added varied test questions to CLAUDE.md for future sessions
+
+### Current Code State
+
+**File:** `practice/cpp/pointers/pointers.cpp`
+
+```cpp
+#include <iostream>
+
+int main() {
+    int num = 42;
+    // int* ptr - declares a pointer (part of the type)
+    // *ptr - dereferences a pointer (accesses the value)
+    int* ptr = &num;
+
+    std::cout << "Value of num: " << num << std::endl;
+    std::cout << "Address of num: " << &num << std::endl;
+    std::cout << "Value stored in ptr: " << ptr << std::endl;
+    std::cout << "Value pointed to by ptr: " << *ptr << std::endl;
+
+    // Arrays and pointers relationship
+    int scores[5] = {10, 20, 30, 40, 50};
+
+    std::cout << "\n--- Arrays ARE Pointers ---" << std::endl;
+    std::cout << "scores (array name): " << scores << std::endl;
+    std::cout << "&scores[0] (address of first element): " << &scores[0] << std::endl;
+
+    std::cout << "\n--- Array Indexing is Pointer Arithmetic ---" << std::endl;
+    std::cout << "scores[2]: " << scores[2] << std::endl;
+    std::cout << "*(scores + 2): " << *(scores + 2) << std::endl;
+
+    std::cout << "\n--- Watch the Addresses ---" << std::endl;
+    std::cout << "Address of scores[0]: " << &scores[0] << std::endl;
+    std::cout << "Address of scores[1]: " << &scores[1] << std::endl;
+    std::cout << "Address of scores[2]: " << &scores[2] << std::endl;
+
+    return 0;
+}
+```
+
+### Where We Left Off
+
+User understands the concepts intellectually but identified that the mental model needs reinforcement through practice. The high-level abstraction of "pointing to a value" is deeply ingrained and needs to be replaced with the low-level reality of "dereferencing an address."
+
+**Next action:** Practice exercises to reinforce the pointer/array mental model
+
+### Next Session Plan
+
+1. **Warm-up questions** - Test the pointer concepts (see questions below)
+2. **Iterate array with pointer** - Use pointer arithmetic instead of index to traverse array
+3. **Modify values through pointers** - Show `*ptr = 100` changes the original variable
+4. **Two-way equivalence practice** - Convert between `array[i]` and `*(array + i)` notation
+
+### Knowledge to Test Next Session
+
+**Must ask these to reinforce mental model shift:**
+
+Basic recall:
+- "What does `&variable` give you?" (the memory address)
+- "What does `*pointer` give you?" (the value at that address)
+
+Syntax distinction:
+- "What's the difference between `int* ptr` and `*ptr`?" (declaration vs dereferencing)
+
+The critical insight (ask multiple ways):
+- "What does `scores[2]` actually do under the hood?" (pointer arithmetic + dereference)
+- "Is `scores[2]` a pointer or a value?" (a value — it's already dereferenced)
+- "Rewrite `scores[3]` using pointer syntax." (`*(scores + 3)`)
+- "Rewrite `*(ptr + 1)` using array syntax." (`ptr[1]`)
+
+Address arithmetic:
+- "Why does `scores + 1` add 4 bytes, not 1 byte?" (scales by sizeof(type))
+- "If `scores` is at `0x1000`, what's the address of `scores[2]`?" (0x1008)
+
+Equivalence:
+- "Are `scores` and `&scores[0]` the same?" (yes — both address of first element)
+
+---
+
+## Previous Session: 2026-01-07
 
 ### Session Focus
 - Completed `sizeof` operator for arrays
 - Created bash workflow shortcuts
 - Started pointers (address-of and dereference operators)
 
-### What Was Completed Today
+### What Was Completed
 
 **1. sizeof Operator - COMPLETED**
 - Learnt `sizeof(array) / sizeof(array[0])` for dynamic array length calculation
@@ -30,53 +145,26 @@ This file tracks session-by-session progress. See CLAUDE.md for methodology and 
   - Usage: `gitpush "commit message"`
 - Documented both shortcuts in README.md and CLAUDE.md
 
-**3. Pointers - IN PROGRESS**
+**3. Pointers Started - PARTIAL**
 - Created `practice/cpp/pointers/` directory and `pointers.cpp`
 - Learnt address-of operator (`&`) - gets memory address of variable
 - Learnt pointer declaration syntax (`int* ptr = &num`)
 - Observed ASLR in action (addresses change each run)
-- Started learning dereference operator (`*ptr`) to access value at address
-
-### Where We Left Off
-
-**File:** `practice/cpp/pointers/pointers.cpp`
-
-**Current code state:**
-```cpp
-#include <iostream>
-
-int main() {
-    int num = 42;
-    int* ptr = &num;
-
-    std::cout << "Value of num: " << num << std::endl;
-    std::cout << "Address of num: " << &num << std::endl;
-    std::cout << "Value stored in ptr: " << ptr << std::endl;
-    std::cout << "Value pointed to by ptr: " << *ptr << std::endl;  // About to test this
-
-    return 0;
-}
-```
-
-**Next action:** Compile and run to verify `*ptr` outputs `42` (the value, not the address)
-
-### Next Session Plan
-
-1. **Verify dereference operator** - Run pointers.cpp, confirm `*ptr` shows `42`
-2. **Arrays and pointers relationship** - Demonstrate that arrays ARE pointers
-3. **Pointer arithmetic** - Show how `ptr + 1` moves by `sizeof(type)` bytes
-4. **Practice exercise** - Iterate through an array using pointer arithmetic instead of indexing
-
-### Knowledge to Test Next Session
-
-Before continuing pointers:
-- "What does `&variable` give you?" (address)
-- "What does `*pointer` give you?" (value at that address)
-- "What's the difference between `int* ptr` (declaration) and `*ptr` (dereferencing)?"
 
 ---
 
 ## Recent Milestones
+
+### Pointers - IN PROGRESS (2026-01-08)
+- ✓ Address-of operator (`&`)
+- ✓ Pointer declaration (`int* ptr`)
+- ✓ Dereference operator (`*ptr`)
+- ✓ Arrays are pointers (`scores` == `&scores[0]`)
+- ✓ Indexing is dereferencing (`scores[2]` == `*(scores + 2)`)
+- ✓ Address spacing observation (4 bytes per int)
+- ○ Mental model reinforcement (ongoing - requires practice)
+- ☐ Pointer arithmetic iteration
+- ☐ Modifying values through pointers
 
 ### Arrays - COMPLETED (2026-01-07)
 - ✓ Declaration, initialisation, zero-based indexing
@@ -110,9 +198,13 @@ Before continuing pointers:
 **Phase:** C/C++ Development (Phase 2 of 5)
 
 **Immediate Goals:**
-- [ ] Complete pointers fundamentals
-- [ ] Pointer arithmetic and array/pointer relationship
+- [ ] Reinforce pointer/array mental model through varied exercises
+- [ ] Pointer arithmetic iteration (traverse array with pointer, not index)
+- [ ] Modify values through pointers
 - [ ] Different data types (char, float, string, bool)
 - [ ] Memory management (heap vs stack from developer perspective)
+
+**Concept Requiring Active Reinforcement:**
+The relationship between arrays and pointers, specifically that `array[i]` is syntactic sugar for `*(array + i)`. User's high-level mental model ("pointing to a value") needs to be replaced with low-level understanding ("dereferencing an address"). This will be tested at the start of each session until it becomes automatic.
 
 **Next Phase:** Windows Internals & DLL Development
